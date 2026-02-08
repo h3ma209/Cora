@@ -1,0 +1,162 @@
+[
+	{
+		"id" : 17,
+		"app_name" : "ana",
+		"title" : "reset password",
+		"content" : "Open the app’s main interface.\n\nAt the top of the screen, tap the options button.\n\nA menu will appear containing the option \"Change Password.\" Select this option.\n\nEnter a new password, which can include numbers and letters to ensure security.\n\nAfter entering the new password, tap \"Confirm.\"",
+		"content_ar" : "افتح الواجهة الرئيسية للتطبيق.\n\nمن أعلى الشاشة، اضغط على زر الخيارات.\n\nستظهر لك قائمة تحتوي على خيار \"تغيير كلمة المرور\". اختر هذا الخيار.\n\nأدخل كلمة مرور جديدة، والتي يمكن أن تتكون من أرقام وحروف لضمان الأمان.\n\nبعد إدخال كلمة المرور الجديدة، اضغط على \"تأكيد\".",
+		"content_ku" : "Navrûya sereke ya serîlêdanê vekin.\n\nJi jorê ekranê, li ser bişkoka Vebijarkan bikirtînin.\n\nMenûyek dê xuya bibe ku vebijarka \"Şîfreyê Biguherîne\" tê de heye. Vê vebijarkê hilbijêre.\n\nŞîfreyeke nû binivîse, ku ji bo ewlehiyê dikare ji hejmar û tîpan pêk were.\n\nPiştî têketina şîfreya nû, li ser \"Piştrast bike\" bikirtînin."
+	},
+	{
+		"id" : 7,
+		"app_name" : "hakki",
+		"title" : "Downloading Hakki",
+		"content" : "To download Hakki application, you can obtain it through the following link:\\\n \\\nAndroid:\\\nGoogle Play:\\\n[https://play.google.com/store/apps/details?id=com.rcell.app](https://play.google.com/store/apps/details?id=com.rcell.app&hl=en_US)\\\nApkpure:\\\n<https://apkpure.com/ar/hakki/com.rcell.app>\\\n\\\nIOS: \\\n<https://apps.apple.com/us/app/hakki/id6449400694>\\\n \\\nOr visit the link below \\\n<https://rcell.me/vas/hakki>",
+		"content_ar" : "لتحميل تطبيق حكي بإمكانكم الحصول عليه عن طريق الرابط التالي:\\\n \\\nاندرويد:  \\\nGoogle Play:\\\n[https://play.google.com/store/apps/details?id=com.rcell.app](https://play.google.com/store/apps/details?id=com.rcell.app&hl=en_US)\\\nApkpure:\\\n<https://apkpure.com/ar/hakki/com.rcell.app>\\\n\\\nIOS: \\\n<https://apps.apple.com/us/app/hakki/id6449400694>\\\n \\\nأو زيارة الرابط ادناه:  \\\n<https://rcell.me/vas/hakki>",
+		"content_ku" : "Ji bo daxistina apliketina Hakki, hûn dikarin bi rêya lînka jêrîn bistînin:\\\n \\\nAndroid:\\\nGoogle Play:\\\n[https://play.google.com/store/apps/details?id=com.rcell.app](https://play.google.com/store/apps/details?id=com.rcell.app&hl=en_US)\\\nApkpure:\\\n<https://apkpure.com/ar/hakki/com.rcell.app>\\\n\\\nIOS: \\\n<https://apps.apple.com/us/app/hakki/id6449400694>\\\n \\\nAn jî lînka jêrîn biçin\\\n<https://rcell.me/vas/hakki>"
+	},
+	{
+		"id" : 9,
+		"app_name" : "HD Call",
+		"title" : "what is HD Call (VoLTE)?",
+		"content" : "HD Call (VoLTE - Voice over LTE) lets you make calls using the 4G/LTE data network instead of older 2G or 3G networks.",
+		"content_ar" : "HD Call (VoLTE - تقنية المكالمات الصوتية بتقنية LTE) يتيح لك إجراء مكالمات باستخدام شبكة بيانات 4G-LTE بدلاً من شبكات 2G أو 3G الأقدم.",
+		"content_ku" : "HD Call (VoLTE - Dengê li ser LTE) dihêle ku hûn bi toreke daneyan a 4G/LTE telefonan bikin Li şûna torên kevin 2G an jî 3G."
+	},
+	{
+		"id" : 10,
+		"app_name" : "HD Call",
+		"title" : "why is HD Call (VoLTE) better?",
+		"content" : "**• Improved Call Quality**: Clearer, crisper audio\n\n**• Faster Call Setup**: Calls connect more quickly\n\n**• Data + Voice**: Use internet while on a call (no switching to 3G)",
+		"content_ar" : "**• تحسين جودة المكالمة:** صوت أكثر وضوحًا ونقاءً\n\n**• إعداد أسرع للمكالمات:** يتم توصيل المكالمات بسرعة أكبر\n\n**• البيانات + الصوت:** استخدم الإنترنت أثناء إجراء مكالمة (بدون التبديل إلى 3G)",
+		"content_ku" : "**• Kalîteya banga pêşketî:** dengê zelaltir\n\n**• Telefonan bileztir saz bike:** Banga bileztir bigere\n\n**• Dane + Deng:** Li ser bangekê bikaranîna înternetê (na guherîna 3G)"
+	},
+	{
+		"id" : 11,
+		"app_name" : "HD Call",
+		"title" : "how to check if your phone supports HD Call (VoLTE)",
+		"content" : "• **In Phone Settings**: Look for “VoLTE” or “4G Calling” in your network settings.\n\n• **Device Specs**: Check online or in your phone’s manual for VoLTE support.\n\n• **Carrier**: Ask your carrier or visit their website.",
+		"content_ar" : "**• في إعدادات الهاتف**: ابحث عن \"VoLTE\" أو \"4G Calling\" في إعدادات الشبكة.\n\n**• مواصفات الجهاز:** تحقق عبر الإنترنت أو في دليل هاتفك للحصول على دعم VoLTE.\n\n**• شركة الاتصال:** اسأل شركة الاتصال الخاص بك أو قم بزيارة موقعهم على الانترنت.",
+		"content_ku" : "**• Di mîhengên telefonê de:** Di mîhengên torê da li \"VoLTE\" an jî \"4G Calling\" bigerin.\n\n**• Taybetiyên Mobîl:** Onlayn kontrol bike An jî ji bo piştgirîya VoLTEyê di telefona xwe da.\n\n**• Barkêş:** Ji barkêşa xwe bipirsin an jî malpera xwe ziyaret bikin."
+	},
+	{
+		"id" : 12,
+		"app_name" : "HD Call",
+		"title" : "how to activate HD Call (VoLTE)",
+		"content" : "• Android \\\n  1- Go to Settings \\\n  2- Tap Connections &gt; Mobile Networks \\\n  3- Switch on VoLTE Calls (or 4G Calling) \n\n•  iPhone \\\n  1 - Go to Settings \\\n  2- Tap Cellular &gt; Cellular Data Options \\\n  3- Choose Enable LTE &gt; Voice & Data ",
+		"content_ar" : "**•** أ**ندرويد**\\\n1- اذهب إلى الإعدادات\\\n2- اضغط على الاتصالات &gt; شبكات الهاتف المحمول\\\n3- غير إلى مكالمات VOLTE (أو مكالمات 4G)\n\n**• ايفون**\\\n1- اذهب إلى الإعدادات\\\n2- اضغط على خلوي &gt; خيارات البيانات الخلوية\\\n3- اختر تمكين LTE &gt; الصوت والبيانات",
+		"content_ku" : "• Android\\\n1- Biçe Mîhengan \\\n2- Vebijêrkekê Girêdan hilbijêre &gt; Torên Mobîl\\\n3- Bangên VoLTE veke (an jî bangên 4G)\n\n• iPhone\\\n1- Biçe Mîhengan\\\n2- Vebijêrka daneya hucreyî &gt; hucreyî\\\n3- LTE çalak bike hilbijêre &gt; Deng & Dane"
+	},
+	{
+		"id" : 13,
+		"app_name" : "HD Call",
+		"title" : "how to use HD Call (VoLTE)",
+		"content" : "After turning it on, just make calls as usual. Your phone will automatically use LTE for calls if your network and area support it.",
+		"content_ar" : "بعد تشغيله، ما عليك سوى إجراء المكالمات كالمعتاد. سيستخدم هاتفك تقنية LTE تلقائيًا لإجراء المكالمات إذا كانت شبكتك ومنطقتك تدعمها.",
+		"content_ku" : "Piştî çalakkirina wê, bi hêsanî wekî her carê telefon bike Telefona te dê ji bo lêgerînan LTE bixweber bi kar bîne Eger tora te û herêma te destekê bide."
+	},
+	{
+		"id" : 14,
+		"app_name" : "HD Call",
+		"title" : "Troubleshooting HD Call (VoLTE)",
+		"content" : "**1- Restart Your Phone**: Fixes minor glitches.\n\n**2- Check Coverage**: Ensure 4G/LTE is available in your area.\n\n**3- Check Carrier Outages**: Look for any reported issues from your carrier.\n\n**4- Toggle Airplane Mode**: Turn it on and off to reset the connection.\n\n**5- Try a Different SIM** (if you have one).\n\n• *Android*: **Settings** &gt; **System** &gt; **Reset Options** &gt; **Reset Network Settings**\n\n• *iPhone*: **Settings** &gt; **General** &gt; **Reset** &gt; **Reset Network Settings**\n\n**6- Reset Network Settings**:\n\n**7- Check APN Settings**: Make sure your carrier’s APN is correct.\n\n**8- Test Your SIM in Another Device**: If VoLTE works there, your original phone may be the issue.",
+		"content_ar" : "**١- أعد تشغيل هاتفك:** إصلاح الأخطاء الطفيفة.\n\n**٢- التحقق من التغطية:** تأكد من توفر 4G/LTE في منطقتك.\n\n**٣- التحقق من انقطاع خدمة الناقل:** ابحث عن أي مشكلات تم الإبلاغ عنها من شركة الاتصالات الخاصة بك.\n\n**٤- تبديل وضع الطيران:** قم بتشغيله وإيقافه لإعادة ضبط الاتصال.\n\n**٥- جرب شريحة SIM مختلفة** (إذا كان لديك واحدة).\n\nAndroid: الإعدادات &gt; النظام &gt; خيارات إعادة الضبط &gt; إعادة ضبط إعدادات الشبكة\n\niPhone:  الإعدادات &gt; عام &gt; إعادة تعيين &gt; إعادة ضبط إعدادات الشبكة\n\n**٦- إعادة ضبط إعدادات الشبكة:**\n\n**٧- تحقق من إعدادات APN:** تأكد من صحة APN الخاص بمشغل شبكة الجوال.\n\n**٨- اختبر بطاقة SIM الخاصة بك في جهاز آخر:** إذا كان VoLTE يعمل هناك، فقد يكون هاتفك الأصلي هو المشكلة.",
+		"content_ku" : "**1- Telefona xwe ji nû ve bide destpêkirin:** Di demên pirsgirêkên biçûk da sererast bike.\n\n**2- Torê kontrol bikin:** Piştrast bin ku li herêma we 4G/LTE heye.\n\n**3- Operatorê xwe kontrol bike:** Li her pirsgirêkên ku ji barkêşê te. hatine ragihandin bigerin.\n\n**4- Moda balafirê veke:** Ji bo vesazkirina pêwendîyê wê veke û bigire.\n\n**5- Karteka Simê ya cuda biceribîne** (heke yeka te hebe).\n\n• Android: **Mîheng &gt; Vebijêrkan nû bike &gt; Pergala &gt; Mîhengên torê ji nû ve saz bike**\n\n• iPhone: **Mîheng &gt; Giştî &gt; Mîhengên Torê &gt; Reset Bike**\n\n**6- Mîhengan  torê ji nû ve saz bike:**\n\n**7- Eyarên APNyên xwe kontrol bikin:** Pê ewle bin ku APNya barkêşê we rast e.\n\n**8- Karta xwe ya SIMê di cîhazeke din da test bike:** Heke VoLTE li wir bixebite, dibe ku telefona we ya orîjînal bibe pirsgirêk."
+	},
+	{
+		"id" : 18,
+		"app_name" : "Inquiries",
+		"title" : "Package in inquiry",
+		"content" : "The package details and prices:\n\n- Sun: 1 GB / day = 4500 (3 points)\n\n- Pluto: 3 GB / week = 10500 (7 points)\n\n- Moon: 5 GB / month = 20000 (11 points)\n\n- Earth: 9 GB / month = 25000 (16 points)\n\n- Mars : 20 GB / month = 55000 (36 points)\n\n- Venues : 40 GB / month = 100000 (66 points)\n\n1 point = 1500 Syrian Pounds",
+		"content_ar" : "تفاصيل الباقة والأسعار:\n\n- الشمس: ١ GBيوميًا = 4500 (3 نقاط)\n- بلوتو: 3GB أسبوعياً = 10500 (7 نقاط)\n- الأرض: ٩ GBشهريًا = 25000 (16 نقطة)\n- القمر: ٥ GBشهريًا = 20000 (11 نقطة)\n- المريخ: ٢٠ GBشهريًا = 55000 (36 نقطة)\n- الكواكب: ٤٠ GBشهريًا = 100000 (66 نقطة)\n\nالنقطة الواحدة = 1500 ليرة سورية",
+		"content_ku" : "Agahdarî û bihayên pakêtê:\n\n- Roj: 1 GB her roj = 4,500 (3 xal)\n- Pluto: 3GB heftane = 10,500 (7 xal)\n- Erd: 9 GB mehê = 25,000 (16 xal)\n- Heyv: 5 GB mehê = 20,000 (11 xal)\n- Mars: mehê 20 GB = 55,000 (36 xal)\n- Gerstêrkan: 40 GB mehê = 100,000 (66 xal)\n\nYek xal = 1500 lîreyên sûrî"
+	},
+	{
+		"id" : 19,
+		"app_name" : "Inquiries",
+		"title" : "Show room working hours",
+		"content" : "Company working hours of our showrooms are : \n\nSaturday from 8:00 AM to 4:00 PM\n\nSunday to Thursday from 8:00 AM to 10:00 PM\n\nFriday is a holiday",
+		"content_ar" : "السبت من الساعة 8:00 صباحًا حتى 4:00 مساءً \n\nالأحد إلى الخميس من الساعة 8:00 صباحًا حتى 10:00 مساءً \n\nالجمعة عطلة رسمية ",
+		"content_ku" : "Şemî ji 8:00 sibê heta 4:00 êvarê \n\nYekşem heta Pêncşemê ji 8:00 sibê heta 10:00 êvarê \n\nÎniyê betlaneya fermî ye "
+	},
+	{
+		"id" : 20,
+		"app_name" : "Inquiries",
+		"title" : "SIM enquiry",
+		"content" : "SIM cards are now available, and you can purchase them from our Show rooms and Authorized point of sells in you City with the price of only 75,000 SYP.",
+		"content_ar" : "أصبحت شرائح SIM متوفرة الآن، ويمكنك شراؤها من مراكزنا ونقاط البيع المعتمدة في مدينتك بسعر 75,000 ليرة سورية فقط. ",
+		"content_ku" : "Kartên SIM niha hene. Hûn dikarin wan ji navendên me û xalên firotanê yên destûrdar ên li bajarê xwe bi tenê 75,000 lîreyên Sûrî bikirin. "
+	},
+	{
+		"id" : 1,
+		"app_name" : "self-care",
+		"title" : "Downloading Self-Care",
+		"content" : "To download the self-care application, you can obtain it through the following link: \\\n \\\nAndroid:\\\nGoogle Play:\\\n<https://play.google.com/store/apps/details?id=com.rcell.selfcareApp> \\\nApkpure:\\\n<https://apkpure.com/ar/rcell-selfcare/com.rcell.selfcareApp>\\\n\\\nIOS: \\\n<https://apps.apple.com/us/app/rselfcare/id6473144133> \\\n \\\nOr visit the link below \\\n<https://rcell.me/vas/selfcare>",
+		"content_ar" : "لتحميل تطبيق الرعاية الذاتية  Self-Care بإمكانكم الحصول عليه عن طريق الرابط التالي: \\\n \\\nاندرويد:  \\\nGoogle Play:\\\n<https://play.google.com/store/apps/details?id=com.rcell.selfcareApp> \\\nApkpure:\\\n<https://apkpure.com/ar/rcell-selfcare/com.rcell.selfcareApp>\\\n \\\nIOS: \\\n<https://apps.apple.com/us/app/rselfcare/id6473144133> \\\n \\\nأو زيارة الرابط ادناه:  \\\n<https://rcell.me/vas/selfcare>",
+		"content_ku" : "Ji bo daxistina apliketina lênêrîna xweser (Self-Care), hûn dikarin bi rêya lînka jêrîn bistînin: \\\n \\\nAndroid: \\\nGoogle Play:\\\n<https://play.google.com/store/apps/details?id=com.rcell.selfcareApp> \\\nApkpure:\\\n<https://apkpure.com/ar/rcell-selfcare/com.rcell.selfcareApp>\\\n \\\nIOS: \\\n<https://apps.apple.com/us/app/rselfcare/id6473144133> \\\n \\\nAn jî lînka jêrîn biçin \\\n<https://rcell.me/vas/selfcare>"
+	},
+	{
+		"id" : 2,
+		"app_name" : "self-care",
+		"title" : "Inability to access Self-Care",
+		"content" : "If you encounter a problem accessing the self-care website, please ensure that your browser is updated to the latest version <https://play.google.com/store/apps/details?id=com.android.chrome> \n\nOr make sure to clear your browser history through the browser settings and then clear your browsing history. ",
+		"content_ar" : "في حال واجهتم مشكلة في الوصول لموقع الرعاية الذاتية يرجى التأكد من تحديث المتصفح لديكم لآخر إصدار <https://play.google.com/store/apps/details?id=com.android.chrome> \n\nأو التأكد من تفريغ سجل المتصفح من خلال اعدادات المتصفح ثم مسح سجل التصفح. ",
+		"content_ku" : "Ger hûn di gihîştina malpera lênêrîna xwe de bi pirsgirêkekê re rû bi rû bimînin, ji kerema xwe piştrast bikin ku geroka we li guhertoya herî paşîn hatî nûve kirin <https://play.google.com/store/apps/details?id=com.android.chrome> \n\nAn jî piştrast bikin ku hûn dîroka geroka xwe bi mîhengên gerokê paqij bikin û dûv re dîroka geroka xwe paqij bikin. "
+	},
+	{
+		"id" : 3,
+		"app_name" : "self-care",
+		"title" : "Activate the PIN",
+		"content" : "From the self-care application, go to Settings, then activate the PIN, then choose your own code, then enter the password, then press the “Activate PIN” button.",
+		"content_ar" : "من تطبيق الرعاية الذاتية اذهب لأعدادات ثم تفعيل الرمز السري PIN  ثم اختر رمز خاص بك ثم أدخل كلمة المرور ثم الضغط على زر’ تفعيل الرمز السري PIN",
+		"content_ku" : "Ji apliketina lênêrîna xweser, biçin Mîhengan, dûv re PIN-ê çalak bikin, dûv re koda xwe hilbijêrin, dûv re şîfreyê binivîsin, dûv re bişkoja \"PIN Çalak bike\" bikirtînin. "
+	},
+	{
+		"id" : 5,
+		"app_name" : "self-care",
+		"title" : "Sending points",
+		"content" : "From a self-care app \n Click Send, then enter the addressee's number, then the amount of points, then Send. ",
+		"content_ar" : "من تطبيق الرعاية الذاتية \n اضغط على إرسال ثم أدخل رقم المرسل إليه ثم كمية النقاط ثم إرسال. ",
+		"content_ku" : "Ji sepanek lênêrîna xwe \n Bişkojka Send bikirtînin, paşê hejmara navnîşan, paşê hejmara xalan, paşê bişîne. "
+	},
+	{
+		"id" : 15,
+		"app_name" : "self-care",
+		"title" : "Self-Care link and Log in issue ",
+		"content" : "If you're having trouble logging into the Self-Care app, try the following steps:\n\n- **Update Your App and Browser**: Ensure that you have the latest version of the Self-Care app and your web browser.\n\n\n- **Disable VPN**: If you're using a VPN, turn it off, as it may prevent access to the app.\n\n\n- **Try the Web Version**: If the app still doesn't work, use the web version by visiting: <https://my.rcell.me/>.\n\nIf the issue persists, contact our support team for further assistance.",
+		"content_ar" : "إذا كنت تواجه مشكلة في تسجيل الدخول إلى تطبيق الرعاية الذاتية، فحاول اتباع الخطوات التالية:\n\nتحديث التطبيق والمتصفح: تأكد من أن لديك أحدث إصدار من تطبيق الرعاية الذاتية ومتصفح الويب الخاص بك.\n\nتعطيل VPN: إذا كنت تستخدم VPN، فأوقف تشغيله، فقد يمنع الوصول إلى التطبيق.\n\nجرب إصدار الويب: إذا كان التطبيق لا يزال لا يعمل، فاستخدم إصدار الويب من خلال زيارة: <https://my.rcell.me/>[.](https://eur04.safelinks.protection.outlook.com/?url=https%3A%2F%2Fmy.rcell.me%2F&data=05%7C02%7Capplication.support%40valeenonline.com%7C5af232d1bc844e071f0108dd5f002df5%7Cb217d6a82fc7443b8d48de19ec65a5c5%7C0%7C0%7C638771176551326519%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&sdata=mfRrgY67BN6oIC6Re8D5NQKcNpFU%2FN0UExKqhXVSxf4%3D&reserved=0)\n\nإذا استمرت المشكلة، اتصل بفريق الدعم الخاص بنا للحصول على مزيد من المساعدة.",
+		"content_ku" : "Heke hûn di têketina sepana Self-Care de tengasiyê digirin, van gavan biceribînin:\n\nSerlêdan û gerokê nûve bikin: Piştrast bikin ku we guhertoya herî dawî ya sepana Self-Care û geroka weya webê heye.\n\nVPN neçalak bike: Heke hûn VPN bikar tînin, wê vemirînin, dibe ku ew gihîştina sepanê asteng bike.\n\nGuhertoya webê biceribîne: Ger sepan hîn jî nexebite, guhertoya malperê bi serdanê bikar bînin: <https://my.rcell.me/>\n\nGer pirsgirêk berdewam bike, ji bo arîkariya bêtir bi tîmê piştevaniya me re têkilî daynin."
+	},
+	{
+		"id" : 16,
+		"app_name" : "self-care",
+		"title" : "Reset Password",
+		"content" : "**Easily and Securely Change Your Password Through the Rayied Application**\n\nThere’s no longer a need to contact customer support or visit the company to change your password. Now, you can do it easily through the Rayied application, following simple and secure steps.\n\nHere’s what you need to do:\n\nOpen the app’s main interface.\n\nAt the top of the screen, tap the options button.\n\nA menu will appear containing the option \"Change Password.\" Select this option.\n\nEnter a new password, which can include numbers and letters to ensure security.\n\nAfter entering the new password, tap \"Confirm.\"\n\nAnd just like that, you will have successfully changed your password with ease, allowing you to access your account securely and conveniently without needing to wait or contact customer support.",
+		"content_ar" : "**تغيير كلمة المرور بسهولة وأمان عبر تطبيق رائد**\n\nلم يعد من الضروري التواصل مع الدعم الفني أو مراجعة الشركة لتغيير كلمة المرور، بل أصبح بإمكانك القيام بذلك بكل سهولة عبر تطبيق رائد، ومن خلال خطوات بسيطة وآمنة.\n\nكل ما عليك فعله هو اتباع هذه الخطوات:\n\nافتح الواجهة الرئيسية للتطبيق.\n\nمن أعلى الشاشة، اضغط على زر الخيارات.\n\nستظهر لك قائمة تحتوي على خيار \"تغيير كلمة المرور\". اختر هذا الخيار.\n\nأدخل كلمة مرور جديدة، والتي يمكن أن تتكون من أرقام وحروف لضمان الأمان.\n\nبعد إدخال كلمة المرور الجديدة، اضغط على \"تأكيد\".\n\nوبهذا تكون قد قمت بتغيير كلمة المرور بنجاح وبكل يسر، مما يتيح لك الوصول إلى حسابك بسهولة وأمان دون الحاجة للانتظار أو التواصل مع الدعم الفني.",
+		"content_ku" : "**Şîfreya xwe bi hêsanî û bi ewlehî bi rêya sepana Rayied biguherînin.** \n\nÊdî ne hewce ye ku hûn bi piştgiriya teknîkî re têkilî daynin an jî ji bo guhertina şîfreya xwe serdana şîrketê bikin. Niha hûn dikarin bi rêya serîlêdanek pêşeng, bi gavên hêsan û ewledar vê yekê bi hêsanî bikin.\n\nTiştê ku hûn bikin ev e ku hûn van gavan bişopînin:\n\nNavrûya sereke ya serîlêdanê vekin.\n\nJi jorê ekranê, li ser bişkoka Vebijarkan bikirtînin.\n\nMenûyek dê xuya bibe ku vebijarka \"Şîfreyê Biguherîne\" tê de heye. Vê vebijarkê hilbijêre.\n\nŞîfreyeke nû binivîse, ku ji bo ewlehiyê dikare ji hejmar û tîpan pêk were.\n\nPiştî têketina şîfreya nû, li ser \"Piştrast bike\" bikirtînin.\n\nBi vê yekê, we şîfreya xwe bi serkeftî û bi hêsanî guhert, ku dihêle hûn ji ewlehî û hêsaniya gihîştina hesabê xwe bêyî ku li bendê bimînin an jî bi piştgiriya teknîkî re têkilî daynin kêfxweş bibin."
+	},
+	{
+		"id" : 21,
+		"app_name" : "self-care",
+		"title" : "Recover password",
+		"content" : "Through settings &gt; Edit profile &gt; Click on “Recover here” ",
+		"content_ar" : "من خلال الأعدادات &gt; تعديل الملف الشخصي &gt; أضغط على \"الاستعادة هنا \" ",
+		"content_ku" : "Di nav mîhengan de &gt; Profîla biguherîne &gt; Li ser \"Li vir vegerîne\" bikirtînin "
+	},
+	{
+		"id" : 4,
+		"app_name" : "speed and signal",
+		"title" : "Connectivity check",
+		"content" : "Check if mobile data is enabled.\\\nEnsure APN (access point name) settings are correct.\\\nConfirm the mobile network mode (e.g., 4g, 3g) is properly set.\\\nConfirm the customer has an active internet/data package.\\\nVerify the data usage and check if the data limit has been reached.\n\nIOS - Check APN: Settings &gt; Cellular &gt; Cellular Data Network &gt; Verify APN settings.\n\nAndroid - Settings &gt; Connections &gt; Mobile Networks &gt; Access Point Names (APN) &gt; Verify APN settings",
+		"content_ar" : "تحقق من تمكين بيانات الجوال.\\\nتأكد من صحة إعدادات APN (اسم نقطة الوصول).\\\nتأكد من ضبط وضع شبكة الهاتف المحمول (على سبيل المثال، 4G، 3G) بشكل صحيح.\\\nالتأكد من أن العميل لديه باقة إنترنت/بيانات نشطة.\\\nتحقق من استخدام البيانات وتحقق مما إذا تم الوصول إلى حد البيانات.\n\nتحقق من APN:\\\nاندروید: الإعدادات &gt; الهاتف الخلوي &gt; شبكة البيانات الخلوية &gt; التحقق من إعدادات APN\\\nIOS: الإعدادات &gt; الاتصالات &gt; شبكات الهاتف المحمول &gt; أسماء نقاط الوصول (APN) &gt; التحقق من إعدادات  APN",
+		"content_ku" : "Kontrol bikin ka daneyên mobîl çalak e.\\\nPiştrast bikin ku mîhengên APN (navê xala gihîştinê) rast in.\\\nPiştrast bike ku moda tora mobîl (mînak, 4g, 3g) bi rêkûpêk hatî danîn.\\\nPiştrast bikin ku xerîdar xwedan pakêtek înternet/dane ya çalak e.\\\nBikaranîna daneyê rast bikin û kontrol bikin ka sînorê daneyê gihîştiye.\n\nIOS - APN-ê kontrol bikin: Settings&gt; Cellular&gt; Cellular Data Network&gt; Vebijêrkên APN-ê verast bikin.\n\nAndroid - Mîheng &gt; Têkilî &gt; Tora Mobîl &gt; Navên Xala Gihîştinê (APN) &gt; Mîhengên APN-ê rast bikin"
+	},
+	{
+		"id" : 8,
+		"app_name" : "speed and signal",
+		"title" : "Slow Internet Issue",
+		"content" : "All of us are facing slow issues, some of them need to be fixed by Service Provider and some of them are user related issues.\\\nto make your complaint more fruitful you must take the following steps and see if any improvement happened:\\\n1- Close all the background Apps.\\\n2- Turn Off the VPN.\\\n3- Turn Off the Hotspot.\\\n4- Make sure you are using Rcell Sim (you must disable all other careers)\\\n5- Turning off and on airplane mode.\\\n6- Restart your device.\\\n7- Update your OS.\\\n8- Then take a Speed Test from ([fast.com](http://fast.com)) and see if it got better.\\\n9- If not, please change your location and try it again.\\\n10- in case no improvements noted, please submit a ticket in issue section.\n\nThanks for choosing Rcell",
+		"content_ar" : "نواجه جميعا مشكلات بطئ الشبكة ، بعضها يحتاج إلى إصلاح من قبل مزود الخدمة وبعضها مشكلات متعلقة بالمستخدم.\n\nلجعل شكواك أكثر فائدة ، يجب عليك اتخاذ الخطوات التالية ومعرفة ما إذا كان قد حدث أي تحسن:\n\n1-      أغلق جميع التطبيقات في الخلفية.\n\n2-      قم بإيقاف تشغيل VPN.\n\n3-      قم بإيقاف تشغيل نقطة الاتصال.\n\n4-      تأكد من أنك تستخدم شريحة Rcell (يجب عليك تعطيل جميع الشرائح الأخرى)\n\n5-      إيقاف تشغيل وتشغيل وضع الطائرة.\n\n6-      أعد تشغيل جهازك.\n\n7-      قم بتحديث نظام التشغيل الخاص بجهازك المحمول.\n\n8-      ثم قم بإجراء اختبار السرعة من ([fast.com](http://fast.com)) ومعرفة ما إذا كان قد تحسن.\n\n9-      إذا لم يكن كذلك ، يرجى تغيير موقعك والمحاولة مرة أخرى.\n\n10- في حالة عدم ملاحظة أي تحسينات ، يرجى رفع تذكرة في قسم رفع تذاكر الشكاوى.\n\nشكرا لاختيارك Rcell",
+		"content_ku" : "Pirsgirêkên me hemûyan ên hêdî hene, hinek divê ji alîyê peydekerê serwîsê ve bên sererastkirin û hinek jî pirsgirêkên têkildarî bikarhêneran in.\n\nJi bo ku hûn gilîya xwe bikêrtir bikin, divê hûn gavên li jêr bavêjin û bibînin ka pêşketinek çêbûye yan na:\n\n1-      Hemû sepanên rûerdê bigire\n\n2-      VPN bigire.\n\n3-      Hotspotê bigire.\n\n4-      Piştrast bin ku Rcell Simê bi kar diînin (divê tu hemû fonksîyonên din neçalak bikî)\n\n5-      Moda balafirê bigire û veke.\n\n6-      Cîhaza xwe ji nû ve bide destpêkirin.\n\n7-      Pergala xwe ya xebitandinê rojane bike.\n\n8-      Dûv re ceribandinek bilez pêk bînin ([fast.com](http://fast.com)) û binihêr'in ka ew baştir bûye yan na.\n\n9-      Heke ne wisa be, ji kerema xwe cihê xwe biguherînin û careke din biceribînin.\n\n10-  Heke pêşketinek neyê çavdêrîkirin, ji kerema xwe di beşa kêşeyan da bilêtekê peyda bikin.\n\nSpas ji bo hilbijartina Rcell"
+	}
+]
