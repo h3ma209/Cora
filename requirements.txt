@@ -2,3 +2,7 @@ fastapi
 uvicorn
 ollama
 PyPDF2
+chromadb
+sentence-transformers
+pydantic
+langchain-text-splitters

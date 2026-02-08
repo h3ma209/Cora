@@ -17,4 +17,4 @@ EXPOSE 8001
 ENV PORT=8001
 
 # Run server.py when the container launches
-CMD ["python", "server.py"]
+CMD ["python3", "server.py"]
