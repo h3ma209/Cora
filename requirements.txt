@@ -6,3 +6,4 @@ chromadb
 sentence-transformers
 pydantic
 langchain-text-splitters
+requests

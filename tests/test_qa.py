@@ -12,14 +12,13 @@ parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, parent_dir)
 
 from src.api.qa import answer_question
-import json
 
 
 def test_qa():
     """Test Q&A with various questions."""
 
     print("=" * 70)
-    print("🧪 Cora Q&A System Test")
+    print("Cora Q&A System Test")
     print("=" * 70)
 
     # Test questions in different languages
@@ -40,6 +39,11 @@ def test_qa():
             "question": "كيف أرسل نقاط في تطبيق الرعاية الذاتية؟",
             "language": "ar",
             "app_name": "self-care",
+        },
+        {
+            "question": "بۆچی ئينتەرنێتەکەم خاوە؟",  # Why is my internet slow? (Sorani)
+            "language": None,  # Should auto-detect as ckb
+            "app_name": None,
         },
         {"question": "What is HD Call?", "language": "en", "app_name": None},
     ]
@@ -64,16 +68,16 @@ def test_qa():
 
         # Display result
         if "error" in result and "answer" not in result:
-            print(f"❌ Error: {result['error']}")
+            print(f"Error: {result['error']}")
         else:
-            print(f"📝 Answer:")
+            print("Answer:")
             print(f"{result['answer']}")
             print()
-            print(f"🎯 Confidence: {result.get('confidence', 'N/A')}")
-            print(f"📚 Sources Retrieved: {result.get('retrieved_docs', 0)}")
+            print(f"Confidence: {result.get('confidence', 'N/A')}")
+            print(f"Sources Retrieved: {result.get('retrieved_docs', 0)}")
 
             if result.get("sources"):
-                print(f"\n📖 Sources:")
+                print("\nSources:")
                 for source in result["sources"]:
                     if source["type"] == "article":
                         print(f"  • Article #{source['article_id']}: {source['title']}")
@@ -87,7 +91,7 @@ def test_qa():
         print()
 
     print("=" * 70)
-    print("✅ Q&A Test Complete")
+    print("Q&A Test Complete")
     print("=" * 70)
 
 

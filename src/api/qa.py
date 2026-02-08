@@ -5,6 +5,7 @@ Answers questions directly using retrieved context from the knowledge base.
 
 import ollama
 from src.rag.retriever import get_retriever
+from src.api.utils import call_mt_api
 from typing import Dict, Optional
 
 
@@ -18,9 +19,9 @@ def get_qa_retriever():
     if _retriever is None:
         try:
             _retriever = get_retriever()
-            print("✓ Q&A retriever initialized")
+            print("Q&A retriever initialized")
         except Exception as e:
-            print(f"⚠️  Q&A retriever failed to initialize: {e}")
+            print(f"Q&A retriever failed to initialize: {e}")
             _retriever = None
     return _retriever
 
@@ -44,6 +45,9 @@ Your role is to answer customer questions accurately based on the provided conte
 5. Be friendly and professional
 6. Support multiple languages: English, Arabic, and Kurdish
 7. Match the language of the user's question in your response
+8. Do not reveal sensitive information
+9. Keep a formal tone and language
+10. Make sure the answers are human-like and natural as possible you can so the user doesn't feel like he's talking to a bot
 
 ### RESPONSE FORMAT:
 - Start with a direct answer
@@ -81,47 +85,71 @@ def answer_question(
         }
 
     try:
-        # Retrieve relevant context
+        # 1. Translate question to English (and detect language) if needed
+        processing_question = question
+        detected_lang = language or "auto"
+
+        # Only translate if not explicitly English
+        if detected_lang.lower() not in ["en", "english"]:
+            print(f"Translating question (source={detected_lang}) to English...")
+            mt_response = call_mt_api(question, source=detected_lang, target="en")
+
+            processing_question = mt_response.get("translated_text", question)
+            detected_lang = mt_response.get("source_lang", detected_lang)
+
+            print(f"Detected: {detected_lang}, Translated: {processing_question}")
+
+        # Retrieve relevant context using English question
         retrieved_docs = retriever.retrieve(
-            query=question, language=language, app_name=app_name
+            query=processing_question, language=None, app_name=app_name
         )
 
         if not retrieved_docs:
+            original_no_info = "I don't have enough information to answer that question. Please contact our support team for assistance."
+            final_answer = original_no_info
+
+            # Translate failure message back if needed
+            if detected_lang and detected_lang.lower() not in ["en", "english", "auto"]:
+                mt_resp = call_mt_api(
+                    original_no_info, source="en", target=detected_lang
+                )
+                final_answer = mt_resp.get("translated_text", original_no_info)
+
             return {
-                "answer": "I don't have enough information to answer that question. Please contact our support team for assistance.",
+                "answer": final_answer,
                 "sources": [],
                 "confidence": "low",
             }
 
-        # Format context for the prompt
-        context = "\n### RETRIEVED CONTEXT:\n\n"
-        sources = []
+        # Format context for the prompt (using retriever's unified formatting)
+        context = retriever.format_context(retrieved_docs)
 
-        for idx, doc_info in enumerate(retrieved_docs, 1):
-            doc = doc_info["document"]
+        # Build sources list for API response
+        sources = []
+        seen_articles = set()
+
+        for doc_info in retrieved_docs:
             metadata = doc_info["metadata"]
             similarity = doc_info["similarity"]
 
-            # Add to context
-            context += f"[Source {idx}]\n"
             if metadata.get("source_type") == "article":
-                context += f"Article ID: {metadata.get('article_id')}\n"
-                context += f"App: {metadata.get('app_name')}\n"
-                context += f"Title: {metadata.get('title')}\n"
+                article_id = metadata.get("article_id")
+                # Deduplicate by article_id
+                if article_id and article_id in seen_articles:
+                    continue
+                if article_id:
+                    seen_articles.add(article_id)
 
-                # Track sources
                 sources.append(
                     {
                         "type": "article",
-                        "article_id": metadata.get("article_id"),
+                        "article_id": article_id,
                         "title": metadata.get("title"),
                         "app": metadata.get("app_name"),
                         "similarity": round(similarity, 3),
                     }
                 )
             else:
-                context += f"PDF: {metadata.get('source_file')}\n"
-
                 sources.append(
                     {
                         "type": "pdf",
@@ -130,28 +158,29 @@ def answer_question(
                     }
                 )
 
-            context += f"Content:\n{doc}\n"
-            context += "-" * 80 + "\n\n"
-
         # Build full prompt
         system_prompt = get_qa_prompt() + context
 
-        # Ensure model is available
-        ollama.pull(model_name)
-
-        # Generate answer
+        # Generate answer in English
         response = ollama.generate(
             model=model_name,
             system=system_prompt,
-            prompt=f"Question: {question}\n\nPlease provide a helpful answer based on the context above.",
+            prompt=f"Question: {processing_question}\n\nPlease provide a helpful answer based on the context above. Answer in English.",
             options={
-                "temperature": 0.3,  # Some creativity for natural responses
+                "temperature": 0.3,
                 "top_p": 0.9,
-                "num_predict": 500,  # Limit response length
+                "num_predict": 500,
             },
         )
 
-        answer = response["response"].strip()
+        english_answer = response["response"].strip()
+        final_answer = english_answer
+
+        # Translate answer back to user language if needed
+        if detected_lang and detected_lang.lower() not in ["en", "english", "auto"]:
+            print(f"Translating answer from English to {detected_lang}...")
+            mt_resp = call_mt_api(english_answer, source="en", target=detected_lang)
+            final_answer = mt_resp.get("translated_text", english_answer)
 
         # Determine confidence based on similarity scores
         avg_similarity = sum(s["similarity"] for s in sources) / len(sources)
@@ -163,9 +192,12 @@ def answer_question(
             confidence = "low"
 
         return {
-            "answer": answer,
+            "answer": final_answer,
             "sources": sources,
             "confidence": confidence,
+            "original_answer_en": english_answer
+            if final_answer != english_answer
+            else None,
             "retrieved_docs": len(retrieved_docs),
         }
 

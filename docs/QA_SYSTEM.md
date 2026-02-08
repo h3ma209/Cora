@@ -1,6 +1,6 @@
 # Q&A System - Documentation
 
-## 🎯 Overview
+## Overview
 
 The Q&A system is a new feature that allows you to ask questions and get direct answers from your knowledge base (articles and PDFs) using RAG (Retrieval-Augmented Generation).
 
@@ -14,20 +14,20 @@ The Q&A system is a new feature that allows you to ask questions and get direct 
 | **Use Case** | Ticket routing, analytics | Customer self-service, chatbot |
 | **Response** | Structured JSON (category, etc.) | Natural language answer |
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Test Locally
 
 ```bash
 # Test Q&A system
-python3 test_qa.py
+make test
 ```
 
 ### 2. Use API
 
 ```bash
 # Start server
-python3 server.py
+make up
 
 # Ask a question
 curl -X POST http://localhost:8001/ask \
@@ -35,7 +35,7 @@ curl -X POST http://localhost:8001/ask \
   -d '{"question": "How do I reset my password?"}'
 ```
 
-## 📊 API Endpoint
+## API Endpoint
 
 ### POST `/ask`
 
@@ -77,7 +77,7 @@ Answer customer questions using RAG-retrieved context.
 }
 ```
 
-## 🎓 Usage Examples
+## Usage Examples
 
 ### Example 1: Basic Question
 
@@ -127,7 +127,13 @@ print(f"Confidence: {result['confidence']}")
 print(f"Sources: {len(result['sources'])}")
 ```
 
-## 📝 Response Fields
+### 4. Multilingual Translation (NEW!)
+
+- **Smart Translation**: Automatically translates non-English questions to English for better retrieval.
+- **Localized Answers**: Translates the English answer back to the user's language.
+- **Supported Languages**: Optimised for English (en), Arabic (ar), and Kurdish (ku), but supports others via Ollama.
+
+## Response Fields
 
 ### `answer` (string)
 
@@ -156,7 +162,7 @@ Confidence level based on similarity scores:
 
 Number of documents retrieved from the knowledge base.
 
-## 🔧 Configuration
+## Configuration
 
 ### Adjust Retrieval Settings
 
@@ -190,7 +196,7 @@ ollama.generate(
 
 Edit the `get_qa_prompt()` function in `src/api/qa.py` to customize how the AI answers questions.
 
-## 🎯 Use Cases
+## Use Cases
 
 ### 1. Customer Self-Service Portal
 
@@ -249,7 +255,7 @@ for question in common_questions:
     faq_cache[question] = result['answer']
 ```
 
-## 📊 Performance
+## Performance
 
 | Metric | Value |
 |--------|-------|
@@ -258,7 +264,7 @@ for question in common_questions:
 | Answer Generation | 500-2000ms |
 | Accuracy | High (with good knowledge base) |
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Issue: "I don't have enough information"
 
@@ -301,19 +307,19 @@ for question in common_questions:
 2. Update Q&A prompt to emphasize language matching
 3. Filter retrieval by language
 
-## 🧪 Testing
+## Testing
 
 ### Run Test Suite
 
 ```bash
-python3 test_qa.py
+make test
 ```
 
 ### Manual Testing
 
 ```bash
 # Start server
-python3 server.py
+make up
 
 # Test in another terminal
 curl -X POST http://localhost:8001/ask \
@@ -340,13 +346,13 @@ curl -X POST http://localhost:8001/ask \
   -d '{"question": "Çawa şîfreyê ji nû ve saz bikim?"}'
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 Access interactive API documentation:
 
 ```bash
 # Start server
-python3 server.py
+make up
 
 # Open in browser
 http://localhost:8001/docs
@@ -359,7 +365,7 @@ This provides:
 - Schema documentation
 - Try-it-out functionality
 
-## 🎨 Integration Examples
+## Integration Examples
 
 ### React Frontend
 
@@ -424,7 +430,7 @@ def handle_whatsapp_message(message):
     )
 ```
 
-## ✅ Summary
+## Summary
 
 The Q&A system provides:
 

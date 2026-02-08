@@ -35,6 +35,19 @@ class KnowledgeIndexer:
         self.metadatas = []
         self.ids = []
 
+    def _add_document(self, text: str, metadata: dict, doc_id: str):
+        """
+        Add a document to the internal buffer.
+
+        Args:
+            text: Document content
+            metadata: Document metadata
+            doc_id: Unique document ID
+        """
+        self.documents.append(text)
+        self.metadatas.append(metadata)
+        self.ids.append(doc_id)
+
     def index_json_file(self, file_path: str) -> int:
         """
         Index articles from a JSON file.
@@ -45,7 +58,7 @@ class KnowledgeIndexer:
         Returns:
             Number of articles indexed
         """
-        print(f"\n📄 Processing JSON: {file_path}")
+        print(f"\nProcessing JSON: {file_path}")
 
         try:
             with open(file_path, "r", encoding="utf-8") as f:
@@ -84,16 +97,14 @@ class KnowledgeIndexer:
                             "language": lang,
                         }
 
-                        self.documents.append(doc_text)
-                        self.metadatas.append(metadata)
-                        self.ids.append(doc_id)
+                        self._add_document(doc_text, metadata, doc_id)
                         count += 1
 
-            print(f"  ✓ Indexed {count} article variants")
+            print(f"  Indexed {count} article variants")
             return count
 
         except Exception as e:
-            print(f"  ✗ Error: {e}")
+            print(f"  Error: {e}")
             return 0
 
     def index_pdf_file(self, file_path: str, chunk_size: int = 1000) -> int:
@@ -107,10 +118,10 @@ class KnowledgeIndexer:
         Returns:
             Number of chunks indexed
         """
-        print(f"\n📄 Processing PDF: {file_path}")
+        print(f"\nProcessing PDF: {file_path}")
 
         if PyPDF2 is None:
-            print("  ✗ PyPDF2 not installed")
+            print("  PyPDF2 not installed")
             return 0
 
         try:
@@ -146,12 +157,10 @@ class KnowledgeIndexer:
                             "language": "en",  # Assume English for PDFs
                         }
 
-                        self.documents.append(chunk)
-                        self.metadatas.append(metadata)
-                        self.ids.append(doc_id)
+                        self._add_document(chunk, metadata, doc_id)
                         count += 1
 
-                print(f"  ✓ Indexed {count} chunks")
+                print(f"  Indexed {count} chunks")
                 return count
 
         except Exception as e:
@@ -195,7 +204,7 @@ class KnowledgeIndexer:
         Returns:
             Total number of documents indexed
         """
-        print(f"\n📁 Indexing directory: {directory}")
+        print(f"\nIndexing directory: {directory}")
 
         total_count = 0
 
@@ -213,7 +222,7 @@ class KnowledgeIndexer:
         for json_file in json_files:
             # Skip files with "ignored" in the name
             if "ignored" in json_file.name.lower():
-                print(f"\n📄 Skipping: {json_file} (ignored)")
+                print(f"\nSkipping: {json_file} (ignored)")
                 continue
             total_count += self.index_json_file(str(json_file))
 
@@ -228,14 +237,14 @@ class KnowledgeIndexer:
         Commit all indexed documents to the vector store.
         """
         if not self.documents:
-            print("\n⚠️  No documents to index")
+            print("\nWarning: No documents to index")
             return
 
-        print(f"\n💾 Committing {len(self.documents)} documents to vector store...")
+        print(f"\nCommitting {len(self.documents)} documents to vector store...")
         self.vector_store.add_documents(
             documents=self.documents, metadatas=self.metadatas, ids=self.ids
         )
-        print("✅ Indexing complete!")
+        print("Indexing complete!")
 
         # Clear buffers
         self.documents = []
@@ -258,7 +267,7 @@ def main():
     args = parser.parse_args()
 
     print("=" * 60)
-    print("🚀 Cora Knowledge Base Indexer")
+    print("Cora Knowledge Base Indexer")
     print("=" * 60)
 
     indexer = KnowledgeIndexer()
@@ -266,7 +275,7 @@ def main():
     # Show stats
     if args.stats:
         stats = indexer.vector_store.get_collection_stats()
-        print(f"\n📊 Vector Store Statistics:")
+        print("\nVector Store Statistics:")
         print(f"  Collection: {stats['collection_name']}")
         print(f"  Documents: {stats['document_count']}")
         print(f"  Location: {stats['persist_directory']}")
@@ -274,7 +283,7 @@ def main():
 
     # Reset if requested
     if args.reset:
-        print("\n⚠️  Resetting vector store...")
+        print("\nResetting vector store...")
         response = input("Are you sure? This will delete all indexed data (y/n): ")
         if response.lower() == "y":
             indexer.vector_store.reset()
@@ -284,7 +293,7 @@ def main():
 
     # Check if data directory exists
     if not os.path.exists(args.data_dir):
-        print(f"\n❌ Error: Data directory not found: {args.data_dir}")
+        print(f"\nError: Data directory not found: {args.data_dir}")
         sys.exit(1)
 
     # Index all files
@@ -295,12 +304,12 @@ def main():
 
     # Show final stats
     stats = indexer.vector_store.get_collection_stats()
-    print(f"\n📊 Final Statistics:")
+    print("\nFinal Statistics:")
     print(f"  Total documents indexed: {total}")
     print(f"  Total in vector store: {stats['document_count']}")
     print(f"  Location: {stats['persist_directory']}")
 
-    print("\n✅ Done! Your knowledge base is ready for RAG.")
+    print("\nDone! Your knowledge base is ready for RAG.")
 
 
 if __name__ == "__main__":

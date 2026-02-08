@@ -1,10 +1,10 @@
 # RAG Setup Guide for Cora AI
 
-## 🎯 Overview
+## Overview
 
 Your Cora AI now has a complete RAG (Retrieval-Augmented Generation) system! This allows the model to dynamically retrieve relevant context from your knowledge base before making classifications.
 
-## 📦 What Was Created
+## What Was Created
 
 ### Core RAG Components
 
@@ -15,13 +15,12 @@ Your Cora AI now has a complete RAG (Retrieval-Augmented Generation) system! Thi
 5. **`docker-compose.yaml`** (updated) - ChromaDB persistence
 6. **`requirements.txt`** (updated) - RAG dependencies
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Step 1: Install Dependencies
 
 ```bash
-cd /Users/hema/Desktop/Drift/Cora
-pip install -r requirements.txt
+make setup
 ```
 
 This will install:
@@ -33,14 +32,7 @@ This will install:
 ### Step 2: Index Your Knowledge Base
 
 ```bash
-# Index all files in the data directory
-python3 indexer.py
-
-# Or reset and reindex
-python3 indexer.py --reset
-
-# Check statistics
-python3 indexer.py --stats
+make index
 ```
 
 **What happens:**
@@ -53,38 +45,12 @@ python3 indexer.py --stats
 
 **Expected output:**
 
-```
-============================================================
-🚀 Cora Knowledge Base Indexer
-============================================================
-
-📁 Indexing directory: ./data
-  Found 1 JSON files and 1 PDF files
-
-📄 Processing JSON: data/jsons/articles.json
-  ✓ Indexed 39 article variants
-
-📄 Processing PDF: data/pdfs/app-docs/Rayied-Rayied Application Documentation.pdf
-  Pages: 25
-  ✓ Indexed 45 chunks
-
-💾 Committing 84 documents to vector store...
-Loading embedding model: paraphrase-multilingual-mpnet-base-v2
-✓ Embedding model loaded
-✓ Added 84 documents to vector store
-✅ Indexing complete!
-
-📊 Final Statistics:
-  Total documents indexed: 84
-  Total in vector store: 84
-  Location: ./chroma_db
-```
-
 ### Step 3: Test RAG Retrieval
 
 ```bash
 # Test the classification with RAG
-python3 cora.py
+# Test classification
+make test-api
 ```
 
 Or test via API:
@@ -105,13 +71,13 @@ docker-compose build
 docker-compose up -d
 
 # Index knowledge base inside container
-docker-compose exec cora-api python3 indexer.py
+make index
 
 # Check logs
 docker-compose logs -f cora-api
 ```
 
-## 🔧 How It Works
+## How It Works
 
 ### Architecture Flow
 
@@ -152,7 +118,7 @@ User Query
 - Fast similarity search using HNSW algorithm
 - Metadata filtering (by language, app_name, etc.)
 
-## 📊 Configuration
+## Configuration
 
 ### Retriever Settings
 
@@ -188,7 +154,7 @@ VectorStore(
 )
 ```
 
-## 🎯 Usage Examples
+## Usage Examples
 
 ### Example 1: Basic Classification with RAG
 
@@ -228,13 +194,10 @@ article_ids = retriever.get_article_recommendations(
 
 ```bash
 # After adding new articles to articles.json
-python3 indexer.py
-
-# Or reset and reindex everything
-python3 indexer.py --reset
+make index
 ```
 
-## 📈 Performance Metrics
+## Performance Metrics
 
 ### Expected Performance
 
@@ -252,18 +215,18 @@ python3 indexer.py --reset
 - ChromaDB: ~50MB + (documents × 3KB)
 - Total: ~500-800MB additional RAM
 
-## 🔍 Monitoring & Debugging
+## Monitoring & Debugging
 
 ### Check Vector Store Stats
 
 ```bash
-python3 indexer.py --stats
+make index
 ```
 
 Output:
 
-```
-📊 Vector Store Statistics:
+```text
+Vector Store Statistics:
   Collection: rayied_knowledge_base
   Documents: 84
   Location: ./chroma_db
@@ -283,12 +246,12 @@ print(context)
 
 The system prints RAG activity:
 
-```
-✓ RAG retriever initialized
-✓ RAG: Retrieved 1247 chars of context
+```text
+RAG retriever initialized
+RAG: Retrieved 1247 chars of context
 ```
 
-## ⚠️ Important Notes
+## Important Notes
 
 ### 1. First-Time Setup
 
@@ -317,10 +280,7 @@ When you update articles or PDFs:
 
 ```bash
 # Option 1: Incremental (adds new docs)
-python3 indexer.py
-
-# Option 2: Full reset (recommended for major changes)
-python3 indexer.py --reset
+make index
 ```
 
 ### 4. Multilingual Support
@@ -357,7 +317,7 @@ python3 -c "from sentence_transformers import SentenceTransformer; SentenceTrans
 
 ```bash
 # Reindex the knowledge base
-python3 indexer.py
+make index
 ```
 
 ### Issue: "RAG retriever failed to initialize"
@@ -437,16 +397,16 @@ for doc in docs:
 3. Set up automated re-indexing
 4. Track user feedback on recommendations
 
-## 🆘 Support
+## Support
 
 If you encounter issues:
 
 1. **Check logs**: `docker-compose logs cora-api`
-2. **Verify indexing**: `python3 indexer.py --stats`
-3. **Test retrieval**: Run `python3 cora.py`
+2. **Verify indexing**: `make logs`
+3. **Test retrieval**: `make test`
 4. **Rebuild**: `docker-compose build --no-cache`
 
-## ✅ Summary
+## Summary
 
 You now have a production-ready RAG system that:
 
@@ -460,5 +420,5 @@ You now have a production-ready RAG system that:
 **Ready to use!** Just run:
 
 ```bash
-python3 indexer.py
+make index
 ```

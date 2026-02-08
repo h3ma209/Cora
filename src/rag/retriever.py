@@ -87,26 +87,22 @@ class RAGRetriever:
         if not retrieved_docs:
             return ""
 
-        context = "\n### RETRIEVED CONTEXT:\n"
-        context += "Use the following information to inform your classification:\n\n"
+        context = "\n### RETRIEVED CONTEXT:\n\n"
 
         for idx, doc_info in enumerate(retrieved_docs, 1):
             doc = doc_info["document"]
             metadata = doc_info["metadata"]
-            similarity = doc_info["similarity"]
 
-            # Add document with metadata
-            context += f"[Source {idx}] "
-
+            # Add to context
+            context += f"[Source {idx}]\n"
             if metadata.get("source_type") == "article":
-                context += f"[Article ID: {metadata.get('article_id')}] "
-                context += f"[App: {metadata.get('app_name')}] "
-                context += f"[Title: {metadata.get('title')}]\n"
-            elif metadata.get("source_type") == "pdf":
-                context += f"[PDF: {metadata.get('source_file')}] "
-                context += f"[Chunk {metadata.get('chunk_index')}]\n"
+                context += f"Article ID: {metadata.get('article_id')}\n"
+                context += f"App: {metadata.get('app_name')}\n"
+                context += f"Title: {metadata.get('title')}\n"
+            else:
+                context += f"PDF: {metadata.get('source_file')}\n"
 
-            context += f"{doc}\n"
+            context += f"Content:\n{doc}\n"
             context += "-" * 80 + "\n\n"
 
         return context
