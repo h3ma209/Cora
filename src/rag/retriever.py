@@ -12,7 +12,7 @@ class RAGRetriever:
     Retrieves relevant context for RAG-enhanced classification.
     """
 
-    def __init__(self, n_results: int = 3, similarity_threshold: float = 0.08):
+    def __init__(self, n_results: int = 5, similarity_threshold: float = 0.05):
         """
         Initialize the retriever.
 
