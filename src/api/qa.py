@@ -6,7 +6,7 @@ Answers questions directly using retrieved context from the knowledge base.
 import ollama
 from src.rag.retriever import get_retriever
 from src.api.utils import call_mt_api
-from typing import Dict, Optional
+from typing import Dict, Optional, Generator
 
 
 # Initialize retriever (lazy loading)
@@ -222,3 +222,98 @@ def answer_question(
             "error": f"Failed to generate answer: {str(e)}",
             "answer": "I encountered an error while processing your question. Please try again.",
         }
+
+
+def stream_answer_question(
+    question: str,
+    language: Optional[str] = None,
+    app_name: Optional[str] = None,
+    model_name: str = "qwen2.5:1.5b",
+) -> Generator[str, None, None]:
+    """
+    Stream the answer to a question.
+
+    Args:
+        question: User's question
+        language: Optional language (en, ar, ku)
+        app_name: Optional app name filter
+        model_name: Ollama model to use
+
+    Yields:
+        Chunks of the answer text
+    """
+
+    # Get retriever
+    retriever = get_qa_retriever()
+    if not retriever:
+        yield "Error: Q&A system not available"
+        return
+
+    try:
+        # 1. Translate question to English if needed
+        processing_question = question
+        detected_lang = language or "auto"
+
+        if detected_lang.lower() not in ["en", "english"]:
+            mt_response = call_mt_api(question, source=detected_lang, target="en")
+            processing_question = mt_response.get("translated_text", question)
+            detected_lang = mt_response.get("source_lang", detected_lang)
+
+        # 2. Retrieve Context
+        retrieved_docs = retriever.retrieve(
+            query=processing_question, language=None, app_name=app_name
+        )
+
+        if not retrieved_docs:
+            # No info found
+            original_no_info = (
+                "I don't have enough information to answer that question."
+            )
+
+            if detected_lang and detected_lang.lower() not in ["en", "english", "auto"]:
+                mt_resp = call_mt_api(
+                    original_no_info, source="en", target=detected_lang
+                )
+                yield mt_resp.get("translated_text", original_no_info)
+            else:
+                yield original_no_info
+            return
+
+        # 3. Format Context
+        context = retriever.format_context(retrieved_docs)
+        system_prompt = get_qa_prompt() + context
+
+        # 4. Generate & Stream
+
+        # CASE A: English -> Stream tokens directly
+        if detected_lang.lower() in ["en", "english"]:
+            for chunk in ollama.generate(
+                model=model_name,
+                system=system_prompt,
+                prompt=f"Question: {processing_question}\n\nPlease provide a helpful answer based on the context above. Answer in English.",
+                options={"temperature": 0.1, "top_p": 0.85},
+                stream=True,
+            ):
+                yield chunk["response"]
+
+        # CASE B: Non-English -> Must generate full English first, then translate
+        else:
+            # Generate full English response (blocking)
+            full_response = ollama.generate(
+                model=model_name,
+                system=system_prompt,
+                prompt=f"Question: {processing_question}\n\nPlease provide a helpful answer based on the context above. Answer in English.",
+                options={"temperature": 0.1, "top_p": 0.85},
+                stream=False,
+            )
+            english_text = full_response["response"]
+
+            # Translate to target language
+            mt_resp = call_mt_api(english_text, source="en", target=detected_lang)
+            translated_text = mt_resp.get("translated_text", english_text)
+
+            # Yield the full translated text as a single chunk (simulated stream)
+            yield translated_text
+
+    except Exception as e:
+        yield f"Error: {str(e)}"

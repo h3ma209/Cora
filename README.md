@@ -103,3 +103,9 @@ python3 -m uvicorn src.api.server:app --reload
 ## License
 
 Proprietary - Rayied Project.
+
+
+### Test streaming
+```bash
+http --stream POST localhost:9321/ask/stream question="Why my sim has such a low signal?" language=en
+```

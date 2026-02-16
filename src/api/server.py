@@ -1,13 +1,23 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
 from src.api import cora, qa
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Cora API",
     description="AI Classification and Q&A Engine for Rayied Customer Support",
     version="2.0.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -84,6 +94,21 @@ async def answer_question(request: QuestionRequest):
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/ask/stream")
+async def stream_question(request: QuestionRequest):
+    """
+    Stream the answer to a customer question.
+    """
+    return StreamingResponse(
+        qa.stream_answer_question(
+            question=request.question,
+            language=request.language,
+            app_name=request.app_name,
+        ),
+        media_type="text/event-stream",
+    )
 
 
 @app.get("/health")
