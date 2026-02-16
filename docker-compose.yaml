@@ -1,22 +1,24 @@
 services:
-  cora-api:
+  drift-cora-api:
+    container_name: drift-cora-container
     build: .
     ports:
-      - "8001:8001"
+      - "9321:8001"
     environment:
-      - OLLAMA_HOST=http://ollama:11434
-      - TRANSLATOR_API_URL=http://host.docker.internal:8000
+      - OLLAMA_HOST=http://drift-ollama:11434
+      - TRANSLATOR_API_URL=http://host.docker.internal:9322
     volumes:
       - .:/app
       - chroma_data:/app/chroma_db
     depends_on:
-      - ollama
+      - drift-ollama
     restart: always
 
-  ollama:
+  drift-ollama:
+    container_name: drift-ollama-container
     image: ollama/ollama:latest
     ports:
-      - "11434:11434"
+      - "9323:11434"
     volumes:
       - ollama_data:/root/.ollama
     restart: always
