@@ -18,6 +18,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["X-Session-ID"],
 )
 
 
@@ -106,14 +107,21 @@ async def stream_question(request: QuestionRequest):
     Stream the answer to a customer question.
     Supports multi-turn conversations via session_id.
     """
+    from src.api.session import get_session_manager
+
+    # Get or create session upfront to return ID in headers
+    session_manager = get_session_manager()
+    session = session_manager.get_session(request.session_id)
+
     return StreamingResponse(
         qa.stream_answer_question(
             question=request.question,
             language=request.language,
             app_name=request.app_name,
-            session_id=request.session_id,
+            session_id=session.session_id,
         ),
         media_type="text/event-stream",
+        headers={"X-Session-ID": session.session_id},
     )
 
 
