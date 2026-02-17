@@ -29,6 +29,7 @@ class QuestionRequest(BaseModel):
     question: str
     language: Optional[str] = None  # en, ar, ku
     app_name: Optional[str] = None  # Filter by app
+    session_id: Optional[str] = None  # For conversation context
 
 
 @app.post("/classify")
@@ -66,12 +67,14 @@ async def classify_text(request: ClassificationRequest):
 async def answer_question(request: QuestionRequest):
     """
     Answer customer questions using RAG-retrieved context from knowledge base.
+    Supports multi-turn conversations via session_id.
 
     Returns:
         - answer: Direct answer to the question
         - sources: List of source articles/documents used
         - confidence: Confidence level (high/medium/low)
         - retrieved_docs: Number of documents retrieved
+        - session_id: Session ID for maintaining conversation context
     """
     try:
         # Check if question is provided
@@ -80,11 +83,12 @@ async def answer_question(request: QuestionRequest):
                 status_code=400, detail="Question field cannot be empty"
             )
 
-        # Call the Q&A function
+        # Call the Q&A function with session support
         result = qa.answer_question(
             question=request.question,
             language=request.language,
             app_name=request.app_name,
+            session_id=request.session_id,
         )
 
         # Check for error in result
@@ -100,12 +104,14 @@ async def answer_question(request: QuestionRequest):
 async def stream_question(request: QuestionRequest):
     """
     Stream the answer to a customer question.
+    Supports multi-turn conversations via session_id.
     """
     return StreamingResponse(
         qa.stream_answer_question(
             question=request.question,
             language=request.language,
             app_name=request.app_name,
+            session_id=request.session_id,
         ),
         media_type="text/event-stream",
     )
