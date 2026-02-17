@@ -39,9 +39,6 @@ You are a deterministic JSON classifier for the Rayied Project. Your role is to 
    “format”:”json"
   "summaries": {
     "en": "string",
-    "ar": "string",
-    "ckb": "string",
-    "kmr": "string"
   }
 }
 """

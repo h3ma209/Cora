@@ -25,16 +25,16 @@ logs: ## View logs
 	docker-compose logs -f
 
 shell: ## Open shell in API container
-	docker-compose exec cora-api /bin/bash
+	docker-compose exec drift-cora-api /bin/bash
 
 index: ## Index knowledge base
-	docker-compose exec cora-api python3 -m src.rag.indexer
+	docker-compose exec drift-cora-api python3 -m src.rag.indexer
 
 test: ## Run tests
 	@echo "$(BLUE)Running RAG tests...$(NC)"
-	docker-compose exec cora-api python3 tests/test_rag.py
+	docker-compose exec drift-cora-api python3 tests/test_rag.py
 	@echo "$(BLUE)Running Q&A tests...$(NC)"
-	docker-compose exec cora-api python3 tests/test_qa.py
+	docker-compose exec drift-cora-api python3 tests/test_qa.py
 
 test-api: ## Test API endpoints with curl
 	@echo "$(BLUE)Testing Health...$(NC)"
