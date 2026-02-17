@@ -6,8 +6,8 @@ Manages chat history and context for multi-turn conversations
 from typing import Dict, List, Optional
 from datetime import datetime, timedelta
 import uuid
+from src.config import MAX_TURNS
 
-MAX_TURNS = 20
 
 class ConversationSession:
     """Represents a single conversation session with history"""
@@ -91,7 +91,9 @@ class SessionManager:
         if session_id in self.sessions:
             self.sessions[session_id].add_message(role, content, metadata)
 
-    def get_session_history(self, session_id: str, max_turns: int = MAX_TURNS) -> List[Dict]:
+    def get_session_history(
+        self, session_id: str, max_turns: int = MAX_TURNS
+    ) -> List[Dict]:
         """Get conversation history for a session"""
         if session_id in self.sessions:
             return self.sessions[session_id].get_history(max_turns)

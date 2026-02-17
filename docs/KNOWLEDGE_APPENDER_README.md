@@ -240,7 +240,7 @@ docker-compose restart cora-api
 
 ## Limitations
 
-- **Context Window**: Qwen2.5:1.5b has a 2048 token limit. Don't append too much knowledge.
+- **Context Window**: qwen2.5:7b has a 2048 token limit. Don't append too much knowledge.
 - **No Semantic Search**: This is not full RAG - all knowledge is in the prompt
 - **Manual Updates**: You need to re-run the script when files change
 

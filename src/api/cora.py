@@ -2,11 +2,19 @@ import ollama
 import json
 from src.api import utils
 from src.rag.retriever import get_retriever
+from src.config import (
+    DEFAULT_MODEL,
+    CLASSIFICATION_TEMPERATURE,
+    CLASSIFICATION_TOP_P,
+    CLASSIFICATION_SEED,
+    CLASSIFICATION_FORMAT,
+)
 
 
 # Initialize retriever (lazy loading)
 _retriever = None
 supported_languages = ["en", "ar", "kmr", "ckb"]
+
 
 def get_rag_retriever():
     """Get or create retriever instance."""
@@ -25,7 +33,7 @@ def get_rag_retriever():
 # Your engineered prompt
 def get_json_classification(user_input, use_rag=True):
     """
-    Calls the local Ollama instance running Qwen2.5:1.5b.
+    Calls the local Ollama instance running qwen2.5:7b.
 
     Args:
         user_input: User query text
@@ -33,7 +41,7 @@ def get_json_classification(user_input, use_rag=True):
     """
 
     # Ensure model is present locally
-    ollama.pull(utils.model_name)
+    ollama.pull(DEFAULT_MODEL)
 
     # Get base system prompt
     base_prompt = utils.read_prompt()
@@ -63,26 +71,24 @@ def get_json_classification(user_input, use_rag=True):
         except Exception as e:
             print(f"⚠️  RAG retrieval failed: {e}")
             print("   Using base prompt without RAG")
-    
-    #translated user input to en for better context retrieval
+
+    # translated user input to en for better context retrieval
     try:
         auto_translation = utils.call_mt_api(user_input, source="auto", target="en")
     except Exception as e:
         print(f"⚠️  Text translation failed: {str(e)}")
         print("   Continuing without translations")
-    
-    
 
     try:
         response = ollama.generate(
-            model=utils.model_name,
+            model=DEFAULT_MODEL,
             system=enhanced_prompt,
             prompt=auto_translation["translated_text"],
-            format="json",  # CRITICAL: Forces Qwen into JSON-mode
+            format=CLASSIFICATION_FORMAT,  # CRITICAL: Forces Qwen into JSON-mode
             options={
-                "temperature": 0.02,  # Zero randomness for mapping consistency
-                "top_p": 0.15,  # Pick only the most certain words
-                "seed": 42,  # Further ensures deterministic output
+                "temperature": CLASSIFICATION_TEMPERATURE,  # Zero randomness for mapping consistency
+                "top_p": CLASSIFICATION_TOP_P,  # Pick only the most certain words
+                "seed": CLASSIFICATION_SEED,  # Further ensures deterministic output
             },
         )
 
@@ -91,17 +97,17 @@ def get_json_classification(user_input, use_rag=True):
         # optional: this section will be removed in production this is only for demo
         summaries = json_resp["summaries"]
         en_summary = summaries["en"]
-        
+
         # translate en_summary to all supported languages
         try:
-            all_langs_translation = utils.call_mt_all_langs_api(en_summary, source="", target="")
+            all_langs_translation = utils.call_mt_all_langs_api(
+                en_summary, source="", target=""
+            )
             for summary in all_langs_translation["translated_text"]:
                 summaries[summary] = all_langs_translation["translated_text"][summary]
         except Exception as e:
             print(f"⚠️  Text translation failed: {str(e)}")
             print("   Continuing without translations")
-
-
 
         # Parse the raw string into a Python Dictionary
         return json_resp

@@ -1,6 +1,7 @@
 import os
 import requests
 from typing import Dict, Any
+from src.config import TRANSLATOR_API_URL
 
 # read the prompt.txt and return the prompt as string
 
@@ -15,9 +16,6 @@ def read_prompt():
         return f.read()
 
 
-model_name = "qwen2.5:1.5b"
-
-
 def call_mt_api(text: str, source: str = "auto", target: str = "en") -> Dict[str, Any]:
     """
     Call the external Machine Translation API.
@@ -30,10 +28,9 @@ def call_mt_api(text: str, source: str = "auto", target: str = "en") -> Dict[str
     Returns:
         Dictionary with keys: translated_text, source_lang, target_lang
     """
-    api_url = os.getenv("TRANSLATOR_API_URL", "http://localhost:8000")
     try:
         response = requests.post(
-            f"{api_url}/translate",
+            f"{TRANSLATOR_API_URL}/translate",
             json={"text": text, "source_lang": source, "target_lang": target},
             timeout=30,
         )
@@ -48,7 +45,9 @@ def call_mt_api(text: str, source: str = "auto", target: str = "en") -> Dict[str
         }
 
 
-def call_mt_all_langs_api(text: str, source: str = "auto", target: str = "en") -> Dict[str, Any]:
+def call_mt_all_langs_api(
+    text: str, source: str = "auto", target: str = "en"
+) -> Dict[str, Any]:
     """
     Call the external Machine Translation API.
 
@@ -60,10 +59,9 @@ def call_mt_all_langs_api(text: str, source: str = "auto", target: str = "en") -
     Returns:
         Dictionary with keys: translated_text, source_lang, target_lang
     """
-    api_url = os.getenv("TRANSLATOR_API_URL", "http://localhost:8000")
     try:
         response = requests.post(
-            f"{api_url}/translate/all",
+            f"{TRANSLATOR_API_URL}/translate/all",
             json={"text": text, "source_lang": source, "target_lang": target},
             timeout=30,
         )
