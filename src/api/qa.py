@@ -14,7 +14,7 @@ from src.config import (
     QA_TOP_P,
     QA_NUM_PREDICT,
 )
-from typing import Dict, Optional, Generator
+from typing import Dict, Optional, Generator, List
 
 
 # Initialize retriever (lazy loading)
@@ -492,28 +492,39 @@ def answer_question(
                     }
                 )
 
-        # Build full prompt with conversation history
-        system_prompt = get_qa_prompt() + context
+        # Build base system prompt with context
+        system_content = get_qa_prompt() + context
 
-        # Add conversation history if available
-        conversation_context = session.get_context_string(max_turns=MAX_TURNS)
+        # Initialize messages list
+        messages: List[Dict] = []
+        messages.append({"role": "system", "content": system_content})
 
-        if conversation_context:
+        # Add conversation history
+        history = session.get_history(max_turns=MAX_TURNS)
+        if history:
             print("\n💬 CONVERSATION HISTORY INCLUDED:")
             print("-" * 60)
-            print(conversation_context)
+            for msg in history:
+                role = msg["role"]
+                content = msg["content"]
+                messages.append({"role": role, "content": content})
+                # Print for debugging
+                prefix = "User" if role == "user" else "Assistant"
+                print(f"{prefix}: {content[:50]}...")
             print("-" * 60 + "\n")
-            user_prompt = f"{conversation_context}\n{processing_question}\n\nPlease provide a helpful answer based on the context above and our conversation history. Answer in English."
+
+            user_content = f"{processing_question}\n\n[INSTRUCTION: Answer in English. Be direct. NO filler like 'Great question' or 'I understand'. NO numbered lists. match the tone of a helpful friend.]"
         else:
             print("ℹ️  No conversation history (first message in session)")
-            user_prompt = f"Question: {processing_question}\n\nPlease provide a helpful answer based on the context above. Answer in English."
+            user_content = f"{processing_question}\n\n[INSTRUCTION: Answer in English. Be direct. NO filler like 'Great question' or 'I understand'. NO numbered lists. match the tone of a helpful friend.]"
 
-        # Generate answer in English
+        messages.append({"role": "user", "content": user_content})
+
+        # Generate answer using chat endpoint
         print(f"🤖 Generating answer with Ollama ({model_name})...")
-        response = ollama.generate(
+        response = ollama.chat(
             model=model_name,
-            system=system_prompt,
-            prompt=user_prompt,
+            messages=messages,
             options={
                 "temperature": QA_TEMPERATURE,
                 "top_p": QA_TOP_P,
@@ -521,7 +532,7 @@ def answer_question(
             },
         )
 
-        english_answer = response["response"].strip()
+        english_answer = response["message"]["content"].strip()
         print(f"✅ Generated answer (English): {english_answer[:100]}...")
         final_answer = english_answer
 
@@ -643,25 +654,33 @@ def stream_answer_question(
 
         # 3. Format Context
         context = retriever.format_context(retrieved_docs)
-        system_prompt = get_qa_prompt() + context
+        system_content = get_qa_prompt() + context
+
+        # Initialize messages list
+        messages: List[Dict] = []
+        messages.append({"role": "system", "content": system_content})
 
         # Add conversation history
-        conversation_context = session.get_context_string(max_turns=MAX_TURNS)
+        history = session.get_history(max_turns=MAX_TURNS)
+        for msg in history:
+            messages.append({"role": msg["role"], "content": msg["content"]})
 
-        if conversation_context:
-            user_prompt = f"{conversation_context}\n{processing_question}\n\nPlease provide a helpful answer based on the context above and our conversation history. Answer in English."
+        # Add user question
+        if history:
+            user_content = f"{processing_question}\n\n[INSTRUCTION: Answer in English. Be direct. NO filler like 'Great question' or 'I understand'. NO numbered lists. match the tone of a helpful friend.]"
         else:
-            user_prompt = f"Question: {processing_question}\n\nPlease provide a helpful answer based on the context above. Answer in English."
+            user_content = f"{processing_question}\n\n[INSTRUCTION: Answer in English. Be direct. NO filler like 'Great question' or 'I understand'. NO numbered lists. match the tone of a helpful friend.]"
+
+        messages.append({"role": "user", "content": user_content})
 
         # 4. Generate & Stream
 
         # CASE A: English -> Stream tokens directly
         if detected_lang.lower() in ["en", "english"]:
             full_response = ""
-            for chunk in ollama.generate(
+            for chunk in ollama.chat(
                 model=model_name,
-                system=system_prompt,
-                prompt=user_prompt,
+                messages=messages,
                 options={
                     "temperature": QA_TEMPERATURE,
                     "top_p": QA_TOP_P,
@@ -669,7 +688,7 @@ def stream_answer_question(
                 },
                 stream=True,
             ):
-                token = chunk["response"]
+                token = chunk["message"]["content"]
                 full_response += token
                 yield token
 
@@ -680,14 +699,17 @@ def stream_answer_question(
         # CASE B: Non-English -> Must generate full English first, then translate
         else:
             # Generate full English response (blocking)
-            full_response = ollama.generate(
+            response = ollama.chat(
                 model=model_name,
-                system=system_prompt,
-                prompt=user_prompt,
-                options={"temperature": 0.1, "top_p": 0.85, "num_predict": 150},
+                messages=messages,
+                options={
+                    "temperature": QA_TEMPERATURE,
+                    "top_p": QA_TOP_P,
+                    "num_predict": QA_NUM_PREDICT,
+                },
                 stream=False,
             )
-            english_text = full_response["response"]
+            english_text = response["message"]["content"]
 
             # Translate to target language
             mt_resp = call_mt_api(english_text, source="en", target=detected_lang)
