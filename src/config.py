@@ -4,10 +4,23 @@ Stores all global constants and settings.
 """
 
 import os
+import torch
 
 # --- Global Settings ---
 DEFAULT_MODEL = "qwen2.5:7b"
 MAX_TURNS = 20  # Conversation history length
+
+# --- System Settings ---
+# Auto-detect device
+if torch.cuda.is_available():
+    _default_device = "cuda"
+elif torch.backends.mps.is_available():
+    _default_device = "mps"
+else:
+    _default_device = "cpu"
+
+DEVICE = os.getenv("DEVICE", _default_device)
+
 
 # --- External Services ---
 # Translator API

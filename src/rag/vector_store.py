@@ -6,7 +6,6 @@ Handles ChromaDB operations for storing and retrieving document embeddings.
 import chromadb
 from chromadb.config import Settings
 from sentence_transformers import SentenceTransformer
-import os
 from typing import List, Dict, Optional
 
 
@@ -39,9 +38,11 @@ class VectorStore:
         )
 
         # Initialize embedding model
-        print(f"Loading embedding model: {embedding_model}")
-        self.embedding_model = SentenceTransformer(embedding_model)
-        print("✓ Embedding model loaded")
+        from src.config import DEVICE
+
+        print(f"Loading embedding model: {embedding_model} on {DEVICE}")
+        self.embedding_model = SentenceTransformer(embedding_model, device=DEVICE)
+        print(f"✓ Embedding model loaded on {DEVICE}")
 
         # Get or create collection
         try:
@@ -83,7 +84,7 @@ class VectorStore:
         print(f"Generating embeddings for {len(documents)} documents...")
         embeddings = self.generate_embeddings(documents)
 
-        print(f"Adding documents to collection...")
+        print("Adding documents to collection...")
         self.collection.add(
             documents=documents, embeddings=embeddings, metadatas=metadatas, ids=ids
         )

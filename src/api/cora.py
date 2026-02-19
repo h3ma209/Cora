@@ -79,17 +79,25 @@ def get_json_classification(user_input, use_rag=True):
         print(f"⚠️  Text translation failed: {str(e)}")
         print("   Continuing without translations")
 
+    # Prepare Ollama options
+    from src.config import DEVICE
+
+    ollama_options = {
+        "temperature": CLASSIFICATION_TEMPERATURE,
+        "top_p": CLASSIFICATION_TOP_P,
+        "seed": CLASSIFICATION_SEED,
+    }
+
+    if DEVICE == "cpu":
+        ollama_options["num_gpu"] = 0
+
     try:
         response = ollama.generate(
             model=DEFAULT_MODEL,
             system=enhanced_prompt,
             prompt=auto_translation["translated_text"],
             format=CLASSIFICATION_FORMAT,  # CRITICAL: Forces Qwen into JSON-mode
-            options={
-                "temperature": CLASSIFICATION_TEMPERATURE,  # Zero randomness for mapping consistency
-                "top_p": CLASSIFICATION_TOP_P,  # Pick only the most certain words
-                "seed": CLASSIFICATION_SEED,  # Further ensures deterministic output
-            },
+            options=ollama_options,
         )
 
         json_resp = json.loads(response["response"])
