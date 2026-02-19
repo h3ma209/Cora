@@ -102,17 +102,30 @@ def get_json_classification(user_input, use_rag=True):
 
         json_resp = json.loads(response["response"])
 
+        # Validate response structure
+        if "summaries" not in json_resp or "en" not in json_resp.get("summaries", {}):
+            print(f"⚠️  Missing 'summaries' or 'en' summary in response: {json_resp}")
+            # Ensure structure exists to prevent crashes
+            if "summaries" not in json_resp:
+                json_resp["summaries"] = {}
+            if "en" not in json_resp["summaries"]:
+                json_resp["summaries"]["en"] = "Summary not available."
+
         # optional: this section will be removed in production this is only for demo
         summaries = json_resp["summaries"]
         en_summary = summaries["en"]
 
         # translate en_summary to all supported languages
         try:
-            all_langs_translation = utils.call_mt_all_langs_api(
-                en_summary, source="", target=""
-            )
-            for summary in all_langs_translation["translated_text"]:
-                summaries[summary] = all_langs_translation["translated_text"][summary]
+            # Only translate if we have a valid summary
+            if en_summary and en_summary != "Summary not available.":
+                all_langs_translation = utils.call_mt_all_langs_api(
+                    en_summary, source="", target=""
+                )
+                for summary in all_langs_translation["translated_text"]:
+                    summaries[summary] = all_langs_translation["translated_text"][
+                        summary
+                    ]
         except Exception as e:
             print(f"⚠️  Text translation failed: {str(e)}")
             print("   Continuing without translations")

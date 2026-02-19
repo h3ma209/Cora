@@ -35,10 +35,9 @@ You are a deterministic JSON classifier for the Rayied Project. Your role is to 
   "issue_type": "string",
   "routing_department": "Technical Support|Customer Care|Management",
   "recommended_article_ids": ["string"],
-  "sentiment": "Positive|Neutral|Negative”,
-   “format”:”json"
+  "sentiment": "Positive|Neutral|Negative",
   "summaries": {
-    "en": "string",
+    "en": "string"
   }
 }
 """
