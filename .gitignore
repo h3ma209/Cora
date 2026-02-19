@@ -36,3 +36,9 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Models
+models/
+*.bin
+*.pt
+*.onnx
