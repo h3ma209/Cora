@@ -22,6 +22,43 @@ app.add_middleware(
 )
 
 
+@app.on_event("startup")
+async def startup_event():
+    """Run on application startup."""
+    try:
+        from src.rag.vector_store import get_vector_store
+
+        # Check if vector store is populated
+        vector_store = get_vector_store()
+        stats = vector_store.get_collection_stats()
+        doc_count = stats.get("document_count", 0)
+
+        print(f"📊 Startup Check: Vector store contains {doc_count} documents.")
+
+        if doc_count == 0:
+            print("⚠️  Vector store is empty! Starting auto-indexing...")
+            from src.rag.indexer import KnowledgeIndexer
+
+            # Assume data directory is relative to execution root
+            data_dir = os.path.join(os.getcwd(), "data")
+
+            if os.path.exists(data_dir):
+                indexer = KnowledgeIndexer()
+                count = indexer.index_directory(data_dir)
+                if count > 0:
+                    indexer.commit()
+                    print(f"✅ Auto-indexing complete. added {count} documents.")
+                else:
+                    print("⚠️  No documents found to index.")
+            else:
+                print(f"⚠️  Data directory not found at: {data_dir}")
+        else:
+            print("✅ Knowledge base is ready.")
+
+    except Exception as e:
+        print(f"❌ Error during startup sequence: {e}")
+
+
 class ClassificationRequest(BaseModel):
     text: str
 
