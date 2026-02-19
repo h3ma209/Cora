@@ -14,8 +14,6 @@ MAX_TURNS = 20  # Conversation history length
 # Auto-detect device
 if torch.cuda.is_available():
     _default_device = "cuda"
-elif torch.backends.mps.is_available():
-    _default_device = "mps"
 else:
     _default_device = "cpu"
 
