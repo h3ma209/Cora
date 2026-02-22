@@ -731,10 +731,13 @@ def stream_answer_question(
             session.add_message("user", question, {"language": detected_lang})
             session.add_message("assistant", full_response)
 
-        # CASE B: Non-English -> Must generate full English first, then translate
+        # CASE B: Non-English -> Sentence-level Buffered Streaming
         else:
-            # Generate full English response (blocking)
-            response = ollama.chat(
+            full_english_text = ""
+            full_translated_text = ""
+            current_buffer = ""
+
+            for chunk in ollama.chat(
                 model=model_name,
                 messages=messages,
                 options={
@@ -742,22 +745,43 @@ def stream_answer_question(
                     "top_p": QA_TOP_P,
                     "num_predict": QA_NUM_PREDICT,
                 },
-                stream=False,
-            )
-            english_text = _clean_robotic_empathy(
-                response["message"]["content"].strip()
-            )
+                stream=True,
+            ):
+                token = chunk["message"]["content"]
+                current_buffer += token
+                full_english_text += token
 
-            # Translate to target language
-            mt_resp = call_mt_api(english_text, source="en", target=detected_lang)
-            translated_text = mt_resp.get("translated_text", english_text)
+                # Check if we hit a sentence-ending delimiter
+                if (
+                    any(punct in token for punct in [".", "!", "?", "\n"])
+                    and len(current_buffer.strip()) > 0
+                ):
+                    clean_chunk = _clean_robotic_empathy(current_buffer.strip())
+                    if clean_chunk:
+                        mt_resp = call_mt_api(
+                            clean_chunk, source="en", target=detected_lang
+                        )
+                        translated_chunk = mt_resp.get("translated_text", clean_chunk)
+
+                        yield translated_chunk + " "
+                        full_translated_text += translated_chunk + " "
+
+                    current_buffer = ""
+
+            # Flush any remaining text in the buffer after streaming ends
+            if current_buffer.strip():
+                clean_chunk = _clean_robotic_empathy(current_buffer.strip())
+                if clean_chunk:
+                    mt_resp = call_mt_api(
+                        clean_chunk, source="en", target=detected_lang
+                    )
+                    translated_chunk = mt_resp.get("translated_text", clean_chunk)
+                    yield translated_chunk
+                    full_translated_text += translated_chunk
 
             # Store in session
             session.add_message("user", question, {"language": detected_lang})
-            session.add_message("assistant", translated_text)
-
-            # Yield the full translated text as a single chunk (simulated stream)
-            yield translated_text
+            session.add_message("assistant", full_translated_text.strip())
 
     except Exception as e:
         yield f"Error: {str(e)}"
