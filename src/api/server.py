@@ -1,8 +1,8 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
-from src.api import cora, qa
+from src.api import cora, qa, memory
 import os
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -102,7 +102,7 @@ async def classify_text(request: ClassificationRequest):
 
 
 @app.post("/ask")
-async def answer_question(request: QuestionRequest):
+async def answer_question(request: QuestionRequest, background_tasks: BackgroundTasks):
     """
     Answer customer questions using RAG-retrieved context from knowledge base.
     Supports multi-turn conversations via session_id.
@@ -133,13 +133,19 @@ async def answer_question(request: QuestionRequest):
         if "error" in result and "answer" not in result:
             raise HTTPException(status_code=500, detail=result["error"])
 
+        # Update memory in background
+        if "session_id" in result:
+            background_tasks.add_task(
+                memory.update_memory_background, result["session_id"]
+            )
+
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/ask/stream")
-async def stream_question(request: QuestionRequest):
+async def stream_question(request: QuestionRequest, background_tasks: BackgroundTasks):
     """
     Stream the answer to a customer question.
     Supports multi-turn conversations via session_id.
@@ -149,6 +155,9 @@ async def stream_question(request: QuestionRequest):
     # Get or create session upfront to return ID in headers
     session_manager = get_session_manager()
     session = session_manager.get_session(request.session_id)
+
+    # Update memory in background (will run after response is complete)
+    background_tasks.add_task(memory.update_memory_background, session.session_id)
 
     return StreamingResponse(
         qa.stream_answer_question(

@@ -96,7 +96,7 @@ User Query
     ↓
 6. Enhance System Prompt with Context
     ↓
-7. Send to Ollama (qwen2.5:7b)
+7. Send to Ollama (llama3.1:8b)
     ↓
 8. Return JSON Classification
 ```

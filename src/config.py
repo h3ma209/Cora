@@ -7,8 +7,8 @@ import os
 import torch
 
 # --- Global Settings ---
-DEFAULT_MODEL = "qwen2.5:7b"
-MAX_TURNS = 20  # Conversation history length
+DEFAULT_MODEL = "llama3.1:8b"
+MAX_TURNS = 50  # Conversation history length
 
 # --- System Settings ---
 # Auto-detect device

@@ -18,17 +18,27 @@ class ConversationSession:
         self.created_at = datetime.now()
         self.last_activity = datetime.now()
         self.metadata = {}
+        # New fields for enhanced memory
+        self.summary = ""  # High-level conversation summary
+        self.entities = {}  # Extracted entities (Name, Phone, Issue, etc.)
 
     def add_message(self, role: str, content: str, metadata: Optional[Dict] = None):
         """Add a message to the conversation history"""
+        now = datetime.now()
+        # Calculate relative time string (e.g. "T+0m", "T+5m")
+        delta = now - self.created_at
+        minutes = int(delta.total_seconds() / 60)
+        time_str = f"T+{minutes}m"
+
         message = {
             "role": role,  # 'user' or 'assistant'
             "content": content,
-            "timestamp": datetime.now().isoformat(),
+            "timestamp": now.isoformat(),
+            "relative_time": time_str,
             "metadata": metadata or {},
         }
         self.messages.append(message)
-        self.last_activity = datetime.now()
+        self.last_activity = now
 
     def get_history(self, max_turns: int = MAX_TURNS) -> List[Dict]:
         """Get recent conversation history (limited to last N turns)"""
@@ -37,16 +47,32 @@ class ConversationSession:
 
     def get_context_string(self, max_turns: int = MAX_TURNS) -> str:
         """Format conversation history as a context string for the LLM"""
+
+        context_parts = []
+
+        # 1. Add Summary if available (Memory Compression)
+        if self.summary:
+            context_parts.append(f"PREVIOUS SUMMARY:\n{self.summary}\n")
+
+        # 2. Add Extracted Entities if available
+        if self.entities:
+            context_parts.append("KNOWN DETAILS:")
+            for k, v in self.entities.items():
+                context_parts.append(f"- {k}: {v}")
+            context_parts.append("")
+
+        # 3. Add Recent History with Timestamps
         history = self.get_history(max_turns)
         if not history:
-            return ""
+            return "\n".join(context_parts)
 
-        context_parts = ["CONVERSATION HISTORY:"]
+        context_parts.append("RECENT CONVERSATION:")
         for msg in history:
             role = "Customer" if msg["role"] == "user" else "You"
-            context_parts.append(f"{role}: {msg['content']}")
+            time_tag = f"[{msg.get('relative_time', 'T+?m')}]"
+            context_parts.append(f"{time_tag} {role}: {msg['content']}")
 
-        context_parts.append("\nCurrent question:")
+        # context_parts.append("\nCurrent question:")
         return "\n".join(context_parts)
 
     def is_expired(self, timeout_minutes: int = 30) -> bool:
@@ -124,5 +150,5 @@ def get_session_manager() -> SessionManager:
     """Get or create the global session manager"""
     global _session_manager
     if _session_manager is None:
-        _session_manager = SessionManager(session_timeout_minutes=30)
+        _session_manager = SessionManager(session_timeout_minutes=120)
     return _session_manager

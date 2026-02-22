@@ -6,7 +6,7 @@
 
 Centralized all configuration variables in one file:
 
-- `DEFAULT_MODEL` ("qwen2.5:7b")
+- `DEFAULT_MODEL` ("llama3.1:8b")
 - `MAX_TURNS` (20)
 - `TRANSLATOR_API_URL`
 - **Classification Settings**: Temperature (0.4), Top P (0.15), Seed (42)
@@ -37,7 +37,7 @@ Centralized all configuration variables in one file:
 
 - **Server Startup**: ✅ Successful ( PID: 68887)
 - **Q&A Functionality**: ✅ Working (`test_conversation.py` running)
-- **Classification**: ⚠️ Fails to return `summaries` field (likely model behavior change with qwen2.5:7b)
+- **Classification**: ⚠️ Fails to return `summaries` field (likely model behavior change with llama3.1:8b)
 
 ## 📝 Usage
 

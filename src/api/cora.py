@@ -33,7 +33,7 @@ def get_rag_retriever():
 # Your engineered prompt
 def get_json_classification(user_input, use_rag=True):
     """
-    Calls the local Ollama instance running qwen2.5:7b.
+    Calls the local Ollama instance running llama3.1:8b.
 
     Args:
         user_input: User query text
